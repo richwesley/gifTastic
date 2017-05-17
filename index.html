@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Giphy Tastic</title>
+  <style type="text/css">
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+  .addContent {
+	width: 250px;
+	float: right;
+}
+.container {
+	width: 1000px;
+}
+#firstMonster {
+	width: 632px;
+	margin-top: -14px;
+	z-index: -5;
+}
+#buttons-view {
+	width: 678px;
+	float: left;
+}
+  .button-design {
+	background-color: #071453;
+	color: white;
+	width: 142px;
+	border-radius: 49px;
+	height: 50px;
+}
+  #input {
+	border-width: 5px;
+	border-style: inset;
+	font-size: large;
+}
+  #add-monster {
+	border-radius: 16px;
+	background-color: #2553B0;
+	color: white;
+	width: 178px;
+	height: 37px;
+}
+  #showMonsters {
+	clear: both;
+}
+  #rating {
+	margin-top: -21px;
+	color: white;
+}
+  .kaiju {
+}
+  #giphy {
+	-webkit-box-shadow: 4px 4px 13px #635BD1;
+	box-shadow: 4px 4px 13px #635BD1;
+}
+  </style>
+</head>
+
+
+<body>
+  <div class="container">
+    
+    <!-- Rendered buttons will get dumped Here  -->
+    <div id="buttons-view"></div>
+    
+    <form class="addContent">    
+      <input type="text" placeholder="Add Another Monster" id="input">
+      <!-- Button triggers new movie to be added -->
+      <input id="add-monster" type="submit" value="Add New Monster">
+    </form>
+   <!-- <div ><img src="scunner_by_ratkol.jpg" id="firstMonster"></div>
+    <!-- Monsters will get dumped dere -->
+    <div id="showMonsters"></div>
+    </div>
+    
+    
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript">
+      // Initial array of movies
+      var topics = ["Godzilla", "Mothra", "Gamera", "Rodan"];
+      // displayMovieInfo function re-renders the HTML to display the appropriate content
+      function displayMonsterInfo() {
+        var monster = $(this).attr("data-monster");
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+        monster + "&api_key=dc6zaTOxFJmzC&limit=10";
+        // Creating an AJAX call for the specific movie button being clicked
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).done(function(response) {
+          // Storing an array of results in the results variable
+          var results = response.data;
+          // Looping over every result item
+          for (var i = 0; i < results.length; i++) {
+            // Only taking action if the photo has an appropriate rating
+            if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+              // Creating a div with the class "kaiju"
+              var gifDiv = $("<div class='kaiju'>");
+              // Storing the result item's rating
+              var rating = results[i].rating;
+              // Creating a paragraph tag with the result item's rating
+              var p = $("<p id='rating'>").text("Rating: " + rating);
+              // Creating an image tag
+              var monsterImage = $("<img id='giphy'>");
+              // Giving the image tag an src attribute of a proprty pulled off the
+              // result item
+              monsterImage.attr("src", results[i].images.fixed_height.url);
+              // Appending the paragraph and personImage we created to the "gifDiv" div we created
+             
+              gifDiv.append(monsterImage);
+			  gifDiv.append(p);	
+              // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+              $("#showMonsters").prepend(gifDiv);
+            }
+          }
+        });
+      }
+      // Function for displaying movie data
+      function renderButtons() {
+        // Deleting the movies prior to adding new movies
+        // (this is necessary otherwise you will have repeat buttons)
+        $("#buttons-view").empty();
+        // Looping through the array of movies
+        for (var i = 0; i < topics.length; i++) {
+          // Then dynamicaly generating buttons for each movie in the array
+          // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+          var a = $("<button>");
+          // Adding a class of movie to our button
+          a.addClass("button-design");
+          // Adding a data-attribute
+          a.attr("data-monster", topics[i]);
+          // Providing the initial button text
+          a.text(topics[i]);
+          // Adding the button to the buttons-view div
+          $("#buttons-view").append(a);
+        }
+      }
+      // This function handles events where a monster button is clicked
+      $("#add-monster").on("click", function(event) {
+        event.preventDefault();
+        // This line grabs the input from the textbox
+        var monster = $("#input").val().trim();
+        // Adding monster from the textbox to our array
+        topics.push(monster);
+        // Calling renderButtons which handles the processing of our topics array
+        renderButtons();
+      });
+      // Adding a click event listener to all elements with a class of "button-design"
+      $(document).on("click", ".button-design", displayMonsterInfo);
+      // Calling the renderButtons function to display the intial buttons
+      renderButtons();
+    </script>
+  
+</body>
+</html>
