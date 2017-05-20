@@ -6,6 +6,7 @@
         var monster = $(this).attr("data-monster");
         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
         monster + "&api_key=dc6zaTOxFJmzC&limit=10";
+		$('#showMonsters').css('background-image', 'none'); 
         
 		 
         $.ajax({
