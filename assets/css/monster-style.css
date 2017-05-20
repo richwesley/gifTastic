@@ -1,0 +1,62 @@
+@charset "utf-8";
+/* CSS Document */
+
+.addContent {
+	width: 250px;
+	float: right;
+}
+.container {
+	width: 1000px;
+}
+#firstMonster {
+	width: 632px;
+	margin-top: -14px;
+	z-index: -5;
+}
+#buttons-view {
+	width: 725px;
+	float: left;
+	min-height: 90px;
+}
+  #input {
+	border-width: 5px;
+	border-style: inset;
+	font-size: large;
+}
+  #add-monster {
+	border-radius: 16px;
+	background-color: #2553B0;
+	color: white;
+	width: 178px;
+	height: 37px;
+}
+  #rating {
+	height: 0px;
+	float: none;
+}
+  .kaiju {
+}
+  #giphy {
+	-webkit-box-shadow: 7px 4px 13px #635BD1;
+	box-shadow: 7px 4px 13px #635BD1;
+	float: none;
+	margin-top: 21px;
+	margin-right: 17px;
+}
+#showMonsters {
+	padding-top: 25px;
+	clear: both;
+	background-image: url(../images/scunner_by_ratkol.jpg);
+	height: 1122px;
+	width: 775px;
+}
+
+  .showMonsterButton {
+	background-color: #122B57;
+	color: white;
+	border-radius: 15px;
+	width: 124px;
+	height: 38px;
+	margin-top: 3px;
+}
+  
